@@ -1,31 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>LA TV Shows | Home</title>
-    <meta name="description" content="A Catalog of Shows Set in Los Angeles" />
+    <title>My Top Eats in LA</title>
+    <meta name="description" content="A Catalog of My Favorite Restaurants in Los Angeles" />
     <link rel="stylesheet" href="style.css" />
     <script type="text/javascript" src="scripts.js"></script>
   </head>
 
   <body>
     <header class="main-header">
-      <h1 class="title">LA TV Shows</h1>
+      <h1 class="title">My Top Eats in LA🍜</h1>
     </header>
+    <div class="search-bar">
+      <input
+        type="text"
+        id="search-bar"
+        placeholder="Search restaurants by name..."
+        oninput="searchCards()"
+      />
+    </div>
+    <div class="form-container">
+      <input type="text" id="nameInput" placeholder="Restaurant Name" />
+      <input type="text" id="imageInput" placeholder="Image URL" />
+      <input type="text" id="locationInput" placeholder="Location" />
+      <input type="text" id="notesInput" placeholder="Notes" />
+      <button onclick="addCard()">Add a Card</button>
+    </div>
     <div id="card-container"></div>
     <div class="card" style="display: none">
+      <img src="" alt="Restaurant Image" />
       <div class="card-content">
-        <h2>TV Show Title</h2>
-        <img src="" alt="TV Show Poster" />
+        <h2>Restaurant Name</h2>
         <ul>
-          <li>Bullet Point 1</li>
-          <li>Bullet Point 2</li>
-          <li>Bullet Point 3</li>
         </ul>
+        <button class="remove_button">Remove</button>
       </div>
     </div>
     <div class="footer">
       <button onclick="quoteAlert();">Get A Quote!</button>
-      <button onclick="removeLastCard();">Remove A Card!</button>
+      <button onclick="removeLastCard();">Remove The Last Card!</button>
+      <button onclick="addCard();">Add a Card</button> 
     </div>
   </body>
 </html>

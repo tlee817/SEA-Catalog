@@ -17,72 +17,94 @@
  *    JavaScript errors and logs, which is extremely helpful for debugging.
  *    (These instructions assume you're using Chrome, opening developer tools
  *    may be different on other browsers. We suggest using Chrome.)
- * - 3 - Add another string to the titles array a few lines down. Reload your
+ * - 3 - Add another string to the restaurants array a few lines down. Reload your
  *    browser and observe what happens. You should see a fourth "card" appear
  *    with the string you added to the array, but a broken image.
  *
  */
 
-const FRESH_PRINCE_URL =
-  "https://upload.wikimedia.org/wikipedia/en/3/33/Fresh_Prince_S1_DVD.jpg";
-const CURB_POSTER_URL =
-  "https://m.media-amazon.com/images/M/MV5BZDY1ZGM4OGItMWMyNS00MDAyLWE2Y2MtZTFhMTU0MGI5ZDFlXkEyXkFqcGdeQXVyMDc5ODIzMw@@._V1_FMjpg_UX1000_.jpg";
-const EAST_LOS_HIGH_POSTER_URL =
-  "https://static.wikia.nocookie.net/hulu/images/6/64/East_Los_High.jpg";
 
-// This is an array of strings (TV show titles)
-let titles = [
-  "Fresh Prince of Bel Air",
-  "Curb Your Enthusiasm",
-  "East Los High",
+// This is an array of strings (TV show restaurants)
+
+const restaurants = [
+  {
+    name: "Nep Cafe",
+    image: "src/nep.jpeg",
+    location: "Fountain Valley",
+    notes: "TRY Ube coffee , Great presentation"
+  },
+  {
+    name: "Jon & Vinny's",
+    image: "src/jonvinny.jpeg",
+    location: "Brentwood",
+    notes:  "Great pasta , Good date spot!"
+  },
+  {
+    name: "Foo Foo Tei",
+    image: "src/fft.jpeg",
+    location: "Hacienda Heights",
+    notes: "Shoyu ramen , Hidden gem , Huge menu"
+  }
 ];
 // Your final submission should have much more data than this, and
 // you should use more than just an array of strings to store it all.
 
 // This function adds cards the page to display the data in the array
-function showCards() {
+function showCards(filter="") {
+  filter = String(filter);
   const cardContainer = document.getElementById("card-container");
   cardContainer.innerHTML = "";
   const templateCard = document.querySelector(".card");
 
-  for (let i = 0; i < titles.length; i++) {
-    let title = titles[i];
-
-    // This part of the code doesn't scale very well! After you add your
-    // own data, you'll need to do something totally different here.
-    let imageURL = "";
-    if (i == 0) {
-      imageURL = FRESH_PRINCE_URL;
-    } else if (i == 1) {
-      imageURL = CURB_POSTER_URL;
-    } else if (i == 2) {
-      imageURL = EAST_LOS_HIGH_POSTER_URL;
+  for (let i = 0; i < restaurants.length; i++) {
+    let temp = restaurants[i];
+    
+    if (!temp.name.toLowerCase().includes(filter.toLowerCase())) {
+      continue;
     }
-
     const nextCard = templateCard.cloneNode(true); // Copy the template card
-    editCardContent(nextCard, title, imageURL); // Edit title and image
+    editCardContent(nextCard, temp); // Edit title and image
     cardContainer.appendChild(nextCard); // Add new card to the container
   }
 }
 
-function editCardContent(card, newTitle, newImageURL) {
+function editCardContent(card, restaurants) {
   card.style.display = "block";
 
   const cardHeader = card.querySelector("h2");
-  cardHeader.textContent = newTitle;
+  cardHeader.textContent = restaurants.name;
 
+  //Image
   const cardImage = card.querySelector("img");
-  cardImage.src = newImageURL;
-  cardImage.alt = newTitle + " Poster";
+  cardImage.src = restaurants.image;
+  cardImage.alt = restaurants.name + " Poster";
+
+  //Location
+  const ul_location = card.querySelector("ul");
+  const line_location = document.createElement("li");
+  line_location.textContent="📍"
+  line_location.textContent += restaurants.location;
+  ul_location.appendChild(line_location);
+
+  //Notes
+   const ul_note = card.querySelector("ul");
+    const line_ul = document.createElement("li");
+    line_ul.textContent = restaurants.notes;
+    ul_note.appendChild(line_ul);
+  
 
   // You can use console.log to help you debug!
   // View the output by right clicking on your website,
   // select "Inspect", then click on the "Console" tab
-  console.log("new card:", newTitle, "- html: ", card);
+  console.log("new card:", restaurants.name, "- html: ", card);
 }
 
 // This calls the addCards() function when the page is first loaded
-document.addEventListener("DOMContentLoaded", showCards);
+//document.addEventListener("DOMContentLoaded", showCards);
+
+document.addEventListener("DOMContentLoaded", () => {
+  showCards("");
+});
 
 function quoteAlert() {
   console.log("Button Clicked!");
@@ -91,7 +113,50 @@ function quoteAlert() {
   );
 }
 
-function removeLastCard() {
-  titles.pop(); // Remove last item in titles array
+function removeLastCard(toRemove="") {
+  // filter = String(filter);
+  // for(let i=0;i<restaurants.length;i++)
+  // {
+  //   let temp = restaurants[i];
+  //   if(temp.name.toLowerCase()==toRemove)
+  //   {
+      
+  //   }
+ // }
+  restaurants.pop(); // Remove last item in restaurants array
   showCards(); // Call showCards again to refresh
+}
+
+function searchCards(){
+  const input = document.getElementById("search-bar").value;
+  showCards(input);
+}
+
+function addCard(){
+  console.log("Entered addCard()"); //DEBUG
+  // <input type="text" id="nameInput" placeholder="Restaurant Name" />
+  // <input type="text" id="imageInput" placeholder="Image URL" />
+  // <input type="text" id="locationInput" placeholder="Location" />
+  // <input type="text" id="notesInput" placeholder="Notes" />
+  const input_name = document.getElementById("nameInput").value;
+  const input_img = document.getElementById("imageInput").value;
+  const input_location = document.getElementById("locationInput").value;
+  const input_note = document.getElementById("notesInput").value;
+
+  console.log("name: " ,input_name,"img url: ",input_img,"location: ",input_location,"notes: ",input_note); //DEBUG
+
+  if(!input_img || !input_location ||!input_name||!input_note){
+    console.log("Invalid Input");
+    alert("Invalid input");
+    return;
+  }
+  // name: "Jon & Vinny's",
+  // image: "src/jonvinny.jpeg",
+  // location: "Brentwood",
+  // notes: [ "Great pasta", "Good date spot!"]
+  const temp = {name:input_name,image:input_img,location:input_location,notes:input_note};
+  restaurants.push(temp);
+  showCards();
+
+  return;
 }
