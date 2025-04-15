@@ -31,19 +31,50 @@ const restaurants = [
     name: "Nep Cafe",
     image: "src/nep.jpeg",
     location: "Fountain Valley",
-    notes: "TRY Ube coffee , Great presentation"
+    ratings: 10,
+    notes: "TRY the Ube coffee , Great presentation"
   },
   {
     name: "Jon & Vinny's",
     image: "src/jonvinny.jpeg",
     location: "Brentwood",
+    ratings: 8,
     notes:  "Great pasta , Good date spot!"
   },
   {
     name: "Foo Foo Tei",
     image: "src/fft.jpeg",
     location: "Hacienda Heights",
+    ratings: 7,
     notes: "Shoyu ramen , Hidden gem , Huge menu"
+  }, 
+  {
+    name: "Marugame Udon",
+    image: "src/mudon.jpeg",
+    location: "Sawtelle",
+    ratings: 6,
+    notes: "Udon texture is NEXT level!"
+  },
+  {
+    name: "Sun Nong Dan",
+    image: "src/snd.jpeg",
+    location: "Korean Town",
+    ratings: 10,
+    notes: "Galbi Jjjim was fire! like LITERALLY."
+  },
+  {
+    name: "JINYA Ramen",
+    image: "src/jinya.jpeg",
+    location: "Burbank",
+    ratings: 7,
+    notes: "The soup base is so (GOOD && THICKKKK)."
+  },
+  {
+    name: "Torisoba",
+    image: "src/torisoba.jpeg",
+    location: "Sawtelle",
+    ratings: 8,
+    notes: "Another THICKKK soupbase and very authentic."
   }
 ];
 // Your final submission should have much more data than this, and
@@ -86,6 +117,13 @@ function editCardContent(card, restaurants) {
   line_location.textContent += restaurants.location;
   ul_location.appendChild(line_location);
 
+  //Ratings
+  const ul_ratings = card.querySelector("ul");
+  const line_ratings = document.createElement("li");
+  line_ratings.textContent="Ratings: ";
+  line_ratings.textContent += restaurants.ratings;
+  ul_ratings.appendChild(line_ratings);
+
   //Notes
    const ul_note = card.querySelector("ul");
     const line_ul = document.createElement("li");
@@ -106,13 +144,6 @@ document.addEventListener("DOMContentLoaded", () => {
   showCards("");
 });
 
-function quoteAlert() {
-  console.log("Button Clicked!");
-  alert(
-    "I guess I can kiss heaven goodbye, because it got to be a sin to look this good!"
-  );
-}
-
 function removeLastCard(toRemove="") {
   // filter = String(filter);
   // for(let i=0;i<restaurants.length;i++)
@@ -127,25 +158,29 @@ function removeLastCard(toRemove="") {
   showCards(); // Call showCards again to refresh
 }
 
+//Called in HTML
 function searchCards(){
   const input = document.getElementById("search-bar").value;
   showCards(input);
 }
+
 
 function addCard(){
   console.log("Entered addCard()"); //DEBUG
   // <input type="text" id="nameInput" placeholder="Restaurant Name" />
   // <input type="text" id="imageInput" placeholder="Image URL" />
   // <input type="text" id="locationInput" placeholder="Location" />
+  // <input type="text" id="ratingsInput" placeholder="Ratings" />
   // <input type="text" id="notesInput" placeholder="Notes" />
   const input_name = document.getElementById("nameInput").value;
   const input_img = document.getElementById("imageInput").value;
   const input_location = document.getElementById("locationInput").value;
+  const input_ratings = document.getElementById("ratingsInput").value;
   const input_note = document.getElementById("notesInput").value;
 
   console.log("name: " ,input_name,"img url: ",input_img,"location: ",input_location,"notes: ",input_note); //DEBUG
 
-  if(!input_img || !input_location ||!input_name||!input_note){
+  if(!input_img || !input_location ||!input_name||!input_ratings||!input_note){
     console.log("Invalid Input");
     alert("Invalid input");
     return;
@@ -153,10 +188,9 @@ function addCard(){
   // name: "Jon & Vinny's",
   // image: "src/jonvinny.jpeg",
   // location: "Brentwood",
-  // notes: [ "Great pasta", "Good date spot!"]
-  const temp = {name:input_name,image:input_img,location:input_location,notes:input_note};
+  // notes:  "Great pasta , Good date spot!"
+  const temp = {name:input_name,image:input_img,location:input_location,ratings:input_ratings, notes:input_note};
   restaurants.push(temp);
   showCards();
-
   return;
 }
