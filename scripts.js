@@ -147,15 +147,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function removeLastCard(toRemove="") {
-  // filter = String(filter);
-  // for(let i=0;i<restaurants.length;i++)
-  // {
-  //   let temp = restaurants[i];
-  //   if(temp.name.toLowerCase()==toRemove)
-  //   {
-      
-  //   }
- // }
   restaurants.pop(); // Remove last item in restaurants array
   showCards(); // Call showCards again to refresh
 }
@@ -192,13 +183,15 @@ function addCard(){
   // location: "Brentwood",
   // notes:  "Great pasta , Good date spot!"
   const temp = {name:input_name,image:input_img,location:input_location,ratings:input_ratings, notes:input_note};
+  restaurants.push(temp);
 
-  
-  if(ascending_order){
-    restaurants.sort((a,b)=>(a.ratings-b.ratings));
+  if(ascending_order)
+  {
+    restaurants.sort((a,b)=>(b.ratings-a.ratings));
   }else{
-    restaurants.sort((a,b)=>(a.ratings+b.ratings));
+    restaurants.sort((a,b)=>(a.ratings-b.ratings));
   }
+
   showCards();
   return;
 }
