@@ -26,20 +26,15 @@
 
 // This is an array of strings (TV show restaurants)
 
+let ascending_order = false;
+
 const restaurants = [
   {
-    name: "Nep Cafe",
-    image: "src/nep.jpeg",
-    location: "Fountain Valley",
-    ratings: 10,
-    notes: "TRY the Ube coffee , Great presentation"
-  },
-  {
-    name: "Jon & Vinny's",
-    image: "src/jonvinny.jpeg",
-    location: "Brentwood",
-    ratings: 8,
-    notes:  "Great pasta , Good date spot!"
+    name: "Marugame Udon",
+    image: "src/mudon.jpeg",
+    location: "Sawtelle",
+    ratings: 6,
+    notes: "Udon texture is NEXT level!"
   },
   {
     name: "Foo Foo Tei",
@@ -49,20 +44,6 @@ const restaurants = [
     notes: "Shoyu ramen , Hidden gem , Huge menu"
   }, 
   {
-    name: "Marugame Udon",
-    image: "src/mudon.jpeg",
-    location: "Sawtelle",
-    ratings: 6,
-    notes: "Udon texture is NEXT level!"
-  },
-  {
-    name: "Sun Nong Dan",
-    image: "src/snd.jpeg",
-    location: "Korean Town",
-    ratings: 10,
-    notes: "Galbi Jjjim was fire! like LITERALLY."
-  },
-  {
     name: "JINYA Ramen",
     image: "src/jinya.jpeg",
     location: "Burbank",
@@ -70,11 +51,32 @@ const restaurants = [
     notes: "The soup base is so (GOOD && THICKKKK)."
   },
   {
+    name: "Jon & Vinny's",
+    image: "src/jonvinny.jpeg",
+    location: "Brentwood",
+    ratings: 8,
+    notes:  "Great pasta , Good date spot!"
+  },
+  {
     name: "Torisoba",
     image: "src/torisoba.jpeg",
     location: "Sawtelle",
     ratings: 8,
     notes: "Another THICKKK soupbase and very authentic."
+  },
+  {
+    name: "Sun Nong Dan",
+    image: "src/snd.jpeg",
+    location: "Korean Town",
+    ratings: 10,
+    notes: "Galbi Jjjim was fire! like LITERALLY."
+  }, 
+  {
+    name: "Nep Cafe",
+    image: "src/nep.jpeg",
+    location: "Fountain Valley",
+    ratings: 10,
+    notes: "TRY the Ube coffee , Great presentation"
   }
 ];
 // Your final submission should have much more data than this, and
@@ -190,7 +192,55 @@ function addCard(){
   // location: "Brentwood",
   // notes:  "Great pasta , Good date spot!"
   const temp = {name:input_name,image:input_img,location:input_location,ratings:input_ratings, notes:input_note};
-  restaurants.push(temp);
+
+  
+  if(ascending_order){
+    restaurants.sort((a,b)=>(a.ratings-b.ratings));
+  }else{
+    restaurants.sort((a,b)=>(a.ratings+b.ratings));
+  }
   showCards();
   return;
 }
+
+function removeCard(toRemove=""){
+  console.log("Entered removeCard()"); //DEBUG
+  toRemove = document.getElementById("removeInput").value;
+
+  if(!toRemove){
+    alert("Invalid input");
+    return;
+  }
+  //Get index of the restaurant in the array
+  console.log("toRemove:",toRemove);
+
+  for(let i=0;i<restaurants.length;i++)
+  {
+    console.log("i:",i ,"restaurants[i]:",restaurants[i].name);
+    if(toRemove===restaurants[i].name)
+    {
+    console.log("Enter toRemove===restaurants[i].name");  //DEBUG
+    //Remove the element in the array
+    restaurants.splice(i,1);
+    showCards();
+    return;
+    }
+  }
+  alert("Restaurant is not on the list"); //DEBUG
+  return;
+}
+
+  function sortCards()
+  {
+    console.log("Entered sortCard()");
+    if(ascending_order)
+    {
+      restaurants.sort((a,b)=>(a.ratings-b.ratings));
+      ascending_order = false;
+    }else{
+      restaurants.sort((a,b)=>b.ratings-a.ratings);
+      ascending_order=true;
+    }
+    showCards();
+  }
+

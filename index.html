@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My Top Eats in LA</title>
+    <title>Elite Top Eats in LA</title>
     <meta name="description" content="A Catalog of My Favorite Restaurants in Los Angeles" />
     <link rel="stylesheet" href="style.css" />
     <script type="text/javascript" src="scripts.js"></script>
@@ -11,6 +11,9 @@
     <header class="main-header">
       <h1 class="title">Elite Top Eats in LA🍜</h1>
     </header>
+    <div class="sort-container">
+      <button onclick="sortCards()" class="sort-button">Sort by ratings</button>
+    </div>
     <div class="search-bar">
       <input
         type="text"
@@ -27,6 +30,10 @@
       <input type="text" id="notesInput" placeholder="Notes" />
       <button onclick="addCard()">Add a Card</button>
     </div>
+    <div class="form-container">
+      <input type="text" id="removeInput" placeholder="Remove a restaurant" />
+      <button onclick="removeCard()">Remove a Card</button>
+    </div>
     <div id="card-container"></div>
     <div class="card" style="display: none">
       <img src="" alt="Restaurant Image" />
@@ -34,7 +41,6 @@
         <h2>Restaurant Name</h2>
         <ul>
         </ul>
-        <button class="remove_button">Remove</button>
       </div>
     </div>
     <div class="footer">
